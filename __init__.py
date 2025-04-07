@@ -7,8 +7,7 @@ from aqt.utils import showInfo
 from aqt import gui_hooks
 
 # Config path
-ADDON_DIR = os.path.dirname(__file__)
-CONFIG_PATH = os.path.join(ADDON_DIR, "config.json")
+CONFIG_PATH = os.path.join(mw.pm.profileFolder(), "auto_reveal", "config.json")
 
 default_config = {
     "allowed_models": ["Your Note Type Here"],

@@ -1,8 +1,8 @@
 {
     "name": "Auto Reveal (Customizable Answer Timer)",
-    "mod": 1,
+    "mod": 2,
     "author": "ramen-curator",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "anki_version": "2.1.0",
     "description": "Automatically shows the answer side of cards after a short delay. Supports note type and deck filtering.",
     "addon_type": "general",
