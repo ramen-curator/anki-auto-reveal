@@ -1,0 +1,10 @@
+{
+    "name": "Auto Reveal (7 Seconds)",
+    "mod": 0,
+    "author": "Curator",
+    "version": "1.0.0",
+    "anki_version": "2.1.0",
+    "description": "Automatically shows the back of the card after a few seconds.",
+    "addon_type": "general"
+  }
+  
