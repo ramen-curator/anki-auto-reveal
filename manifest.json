@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "anki_version": "2.1.0",
     "description": "Automatically shows the answer side of cards after a short delay. Supports note type and deck filtering.",
-    "addon_type": "general"
+    "addon_type": "general",
+    "homepage": "https://github.com/ramen-curator/anki-auto-reveal"
   }
   
