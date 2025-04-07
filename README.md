@@ -1,24 +1,32 @@
-# Auto Reveal (7 Seconds)
+# Auto Reveal (Customizable Answer Timer)
 
-An Anki addon that automatically flips the card and shows the answer after a 7-second delay.
+An Anki addon that automatically flips the card and shows the answer after a delay.
 
 ## Why?
 
-When reviewing flashcards, it's easy to fall into the trap of overthinking — spending 30 seconds trying to drag a half-remembered word out of your brain, only to realize you were wrong anyway.
+When reviewing flashcards, it's easy to overthink — spending 30+ seconds struggling to remember a word or concept, often ending in frustration.
 
-This addon is for people who want to avoid that trap.
+This addon helps break that cycle by automatically showing the answer after a set time.  
+Just enough to test recall, but not long enough to get stuck.
 
-Instead of relying on willpower to "give up" and flip the card, this addon flips it for you after a set delay — giving you just enough time to attempt recall, but not enough to spiral into obsessive guessing.
-
-In short: it's not about being lazy.  
-It's about being kind to your brain.
+It’s not about being lazy.  
+It’s about being kind to your brain.
 
 ## Features
 
-- Automatically shows the back of the card after 7 seconds
-- No user interaction needed
-- Works with most versions of Anki (tested on 25.02+)
+- Automatically shows the answer side after a user-defined delay
+- Supports custom note types and deck name filters
+- Optional longer delay for cards tagged as `longform`
+- Lightweight, non-intrusive, self-contained
+- Works with most Anki versions (tested on 25.02+)
+- GUI-based configuration (no code editing required)
+
+
+## Settings
+
+Find the settings in the Anki top menu:  
+**Tools → Auto Reveal Settings**
 
 ## License
 
-MIT. Do whatever you want. Just don't make it 8 seconds.  
+MIT. You can use it, modify it, or ignore it. Just don't set it to 0 seconds — that’s cheating.
