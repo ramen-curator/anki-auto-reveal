@@ -7,7 +7,8 @@ from aqt.utils import showInfo
 from aqt import gui_hooks
 
 # Config path
-CONFIG_PATH = os.path.join(mw.pm.profileFolder(), "auto_reveal", "config.json")
+def get_config_path():
+    return os.path.join(mw.pm.profileFolder(), "auto_reveal", "config.json")
 
 default_config = {
     "allowed_models": ["Your Note Type Here"],
@@ -16,14 +17,16 @@ default_config = {
 }
 
 def load_config():
-    if os.path.exists(CONFIG_PATH):
-        with open(CONFIG_PATH, "r", encoding="utf-8") as f:
+    path = get_config_path()
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as f:
             return json.load(f)
     return default_config.copy()
 
 def save_config(config):
-    os.makedirs(os.path.dirname(CONFIG_PATH), exist_ok=True)
-    with open(CONFIG_PATH, "w", encoding="utf-8") as f:
+    path = get_config_path()
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
 
 config = load_config()
