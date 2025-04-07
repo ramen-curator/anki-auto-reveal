@@ -29,7 +29,14 @@ def save_config(config):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(config, f, ensure_ascii=False, indent=2)
 
-config = load_config()
+# -- snip --
+_config_cache = None
+
+def get_config():
+    global _config_cache
+    if _config_cache is None:
+        _config_cache = load_config()
+    return _config_cache
 
 # Auto-flip logic
 LONGFORM_TAG = "longform"
@@ -44,9 +51,9 @@ def patched_show_question(self):
 
     model_name = self.card.note().model()["name"]
     deck_name = mw.col.decks.name(self.card.did)
-    allowed_models = config.get("allowed_models", [])
-    allowed_decks = config.get("allowed_decks", [])
-    delay = config.get("delay_seconds", 7) * 1000  # convert to ms
+    allowed_models = get_config().get("allowed_models", [])
+    allowed_decks = get_config().get("allowed_decks", [])
+    delay = get_config().get("delay_seconds", 7) * 1000  # convert to ms
 
     if model_name not in allowed_models:
         return result
@@ -95,21 +102,21 @@ class SettingsDialog(QDialog):
         layout.addWidget(self.label_models)
 
         self.input_models = QLineEdit()
-        self.input_models.setText(", ".join(config.get("allowed_models", [])))
+        self.input_models.setText(", ".join(get_config().get("allowed_models", [])))
         layout.addWidget(self.input_models)
 
         self.label_deck = QLabel("Allowed deck names (comma-separated):")
         layout.addWidget(self.label_deck)
 
         self.input_deck = QLineEdit()
-        self.input_deck.setText(", ".join(config.get("allowed_decks", [])))
+        self.input_deck.setText(", ".join(get_config().get("allowed_decks", [])))
         layout.addWidget(self.input_deck)
 
         self.label_delay = QLabel("Auto reveal delay (seconds):")
         layout.addWidget(self.label_delay)
 
         self.input_delay = QLineEdit()
-        self.input_delay.setText(str(config.get("delay_seconds", 7)))
+        self.input_delay.setText(str(get_config().get("delay_seconds", 7)))
         layout.addWidget(self.input_delay)
 
         self.save_button = QPushButton("Save Settings")
@@ -126,6 +133,7 @@ class SettingsDialog(QDialog):
         except:
             delay = 7
 
+        config = get_config()
         config["allowed_models"] = models
         config["allowed_decks"] = decks
         config["delay_seconds"] = delay
