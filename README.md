@@ -21,6 +21,10 @@ It’s about being kind to your brain.
 - Works with most Anki versions (tested on 25.02+)
 - GUI-based configuration (no code editing required)
 
+## Install
+
+You can install the addon from AnkiWeb:  
+[Auto Reveal on AnkiWeb](https://ankiweb.net/shared/info/1616044684?cb=1744024933530)
 
 ## Settings
 
