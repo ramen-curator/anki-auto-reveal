@@ -33,7 +33,11 @@ config = load_config()
 LONGFORM_TAG = "longform"
 _original_show_question = Reviewer._showQuestion
 
+timer_ref = None  # store last timer so we can cancel it
+
 def patched_show_question(self):
+    global timer_ref  # track the current timer
+
     result = _original_show_question(self)
 
     model_name = self.card.note().model()["name"]
@@ -50,7 +54,24 @@ def patched_show_question(self):
     if LONGFORM_TAG in self.card.note().tags:
         delay = int(delay * 2)
 
-    QTimer.singleShot(delay, lambda: reveal_answer_if_safe(self))
+    # 🔥 cancel previous timer
+    if timer_ref is not None:
+        timer_ref.stop()
+        timer_ref.deleteLater()
+        timer_ref = None
+
+    # ✅ create a new one
+    timer = QTimer()
+    timer.setSingleShot(True)
+
+    def flip_if_same_card():
+        if self and self.state == "question":
+            self._showAnswer()
+
+    timer.timeout.connect(flip_if_same_card)
+    timer.start(delay)
+    timer_ref = timer  # track this timer
+
     return result
 
 def reveal_answer_if_safe(reviewer):
