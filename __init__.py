@@ -55,6 +55,12 @@ def patched_show_question(self):
     allowed_decks = get_config().get("allowed_decks", [])
     delay = get_config().get("delay_seconds", 7) * 1000  # convert to ms
 
+    #  cancel previous timer
+    if timer_ref is not None:
+        timer_ref.stop()
+        timer_ref.deleteLater()
+        timer_ref = None
+
     if model_name not in allowed_models:
         return result
     if allowed_decks and deck_name not in allowed_decks:
@@ -63,13 +69,7 @@ def patched_show_question(self):
     if LONGFORM_TAG in self.card.note().tags:
         delay = int(delay * 2)
 
-    # 🔥 cancel previous timer
-    if timer_ref is not None:
-        timer_ref.stop()
-        timer_ref.deleteLater()
-        timer_ref = None
-
-    # ✅ create a new one
+    #  create a new one
     timer = QTimer()
     timer.setSingleShot(True)
 
