@@ -1,7 +1,7 @@
 import os
 import json
 from aqt import mw
-from aqt.qt import QTimer, QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton
+from aqt.qt import QTimer, QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox
 from aqt.reviewer import Reviewer
 from aqt.utils import showInfo
 from aqt import gui_hooks
@@ -13,7 +13,8 @@ def get_config_path():
 default_config = {
     "allowed_models": ["Your Note Type Here"],
     "allowed_decks": ["Your Deck Here"],
-    "delay_seconds": 7
+    "delay_seconds": 7,
+    "enabled": True
 }
 
 def load_config():
@@ -48,6 +49,9 @@ def patched_show_question(self):
     global timer_ref  # track the current timer
 
     result = _original_show_question(self)
+
+    if not get_config().get("enabled", True): 
+        return result
 
     model_name = self.card.note().model()["name"]
     deck_name = mw.col.decks.name(self.card.did)
@@ -119,6 +123,10 @@ class SettingsDialog(QDialog):
         self.input_delay.setText(str(get_config().get("delay_seconds", 7)))
         layout.addWidget(self.input_delay)
 
+        self.toggle_enabled = QCheckBox("Enable Auto Reveal Effect")
+        self.toggle_enabled.setChecked(get_config().get("enabled", True))
+        layout.addWidget(self.toggle_enabled)
+
         self.save_button = QPushButton("Save Settings")
         self.save_button.clicked.connect(self.save)
         layout.addWidget(self.save_button)
@@ -137,6 +145,7 @@ class SettingsDialog(QDialog):
         config["allowed_models"] = models
         config["allowed_decks"] = decks
         config["delay_seconds"] = delay
+        config["enabled"] = self.toggle_enabled.isChecked()
 
         save_config(config)
         showInfo("Settings saved. Restart Anki to apply changes.")
