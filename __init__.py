@@ -148,7 +148,8 @@ class SettingsDialog(QDialog):
         config["enabled"] = self.toggle_enabled.isChecked()
 
         save_config(config)
-        showInfo("Settings saved. Restart Anki to apply changes.")
+        global _config_cache
+        _config_cache = None
         self.close()
 
 def open_settings():
